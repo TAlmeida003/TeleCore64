@@ -22,7 +22,7 @@ Deselvolvimento de um módulo de vídeo HDMI para FPGA
 No  transmissor,  há  três  codificadores  idênticos,  onde  cada  um  está  acionando  um  canal  de  dados  TMDS  serial.  Um  cabo  HDMI  carrega  quatro  pares  diferenciais  que  compõem  os  canais  de  dados  e  clock  TMDS.  Os  canais  de dados  carregam  dados  auxiliares,  além  de  áudio  e  vídeo.
 
 <p align="center">
-  <img src="img/tmds.png" alt="TMDS" width="900"/>
+  <img src="img/tmds.png" alt="TMDS" width="700"/>
 </p>
 
 <p align="center"> Figura X: Versão simplificada do TMDS </p>
@@ -30,7 +30,20 @@ No  transmissor,  há  três  codificadores  idênticos,  onde  cada  um  está 
 <div id="clk">
 <h3> Clock TMDS </h3>
 
-A  frequência  do  relógio  TMDS  é  tipicamente  relacionada  à  taxa  de  pixel  do  vídeo  e  é  usada  pelo  receptor  para  sincronizar  a  recuperação  de  dados.  O  transmissor  opera  em  duas  frequências  de  relógio  diferentes,  onde  a  mais lenta  é  a  frequência  do  relógio  TMDS.  A  serialização  é  feita  em  uma  frequência  que  é  dez  vezes  maior  que  a frequência  do  relógio  TMDS.  O  sinal  do  relógio  é  transmitido  no  canal  do  relógio  TMDS.
+A frequência do clock TMDS está diretamente ligada à taxa de pixels do vídeo e serve para que o receptor sincronize a recuperação dos dados transmitidos. No transmissor, existem duas frequências de operação: a frequência mais baixa, que é o próprio clock TMDS, e a frequência de serialização, que é dez vezes maior. O sinal do clock é transmitido de forma separada pelo canal dedicado de clock TMDS.
+
+No projeto desenvolvido, foi adotado um clock de serialização cinco vezes mais rápido que o clock TMDS. Nesse contexto, o clock TMDS opera a 25 MHz, e o clock de serialização alcança 125 MHz. Como o clock TMDS deriva do clock de pixel — que, para uma resolução de 640×480 a 60 Hz, também é de 25 MHz — foi necessário utilizar a técnica DDR (Double Data Rate). Assim, a cada ciclo de clock são transmitidos dois bits, permitindo que em cinco ciclos sejam enviados os 10 bits necessários.
+
+Para isso, é utilizado o núcleo IP ALTDDIO_OUT, que faz parte da biblioteca de IPs de taxa de dados dupla (DDR) da Altera. Essa biblioteca inclui o ALTDDIO_IN, para interfaces de entrada DDR; o ALTDDIO_OUT, para interfaces de saída DDR; e o ALTDDIO_BIDIR, para interfaces DDR bidirecionais.
+
+Neste módulo, o núcleo ALTDDIO_OUT implementa a interface de saída DDR, convertendo dois sinais de borda única em um sinal DDR que transmite dados tanto na borda de subida quanto na borda de descida do clock de referência.
+
+<p align="center">
+  <img src="img/ddr.png" alt="TMDS" width="700"/>
+</p>
+
+<p align="center">Figura X: Arquitetura do núcleo ALTDDIO_OUT para transmissão de dados em DDR</p>
+</div>
 
 </div>
 
@@ -101,15 +114,9 @@ A  sinalização  diferencial  é  um  método  de  transmissão  de  informaç�
 
 </div>
 
-</div>
-</div>
-
-<div align="justify">
-<div id="irq">
-
-<h2>Mascara de interrupção</h2>
-
-
+  <img src="img/tx.png" alt="HDMI Encoder" width="1000"/>
+</p>
+<p align="center"> Figura X: </p>
 
 </div>
 </div>
