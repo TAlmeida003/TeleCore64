@@ -108,6 +108,11 @@ A  sinalização  diferencial  é  um  método  de  transmissão  de  informaç�
 <p align="center"> Figura X: Esquema de codificação </p>
 
 <p align="center">
+  <img src="img/temposIntel.png" alt="HDMI Encoder" width="900"/>
+</p>
+<p align="center"> Figura X: Esquema de codificação </p>
+
+<p align="center">
   <img src="img/layoutEncoder.png" alt="HDMI Encoder" width="900"/>
 </p>
 <p align="center"> Figura X: Layout do codificador </p>
@@ -117,6 +122,29 @@ A  sinalização  diferencial  é  um  método  de  transmissão  de  informaç�
   <img src="img/tx.png" alt="HDMI Encoder" width="1000"/>
 </p>
 <p align="center"> Figura X: </p>
+
+<div id="pinout">
+<h3>Pinout</h3>
+
+<p align="center">
+  <img src="img/pinout.png" alt="Pinout" width="900"/>
+
+</p>
+<p align="center"> Figura X: Pinout do transmissor </p>
+
+| GPIO        | FPGA     |LVDS(P/N)| HDMI |
+|-------------|----------|---------|------|
+| GPIO_1_11   | PIN_T15  | N       | DATA 2- |
+| GPIO_1_12   | PIN_T14  | P       | DATA 2+ |
+| GPIO_1_13   | PIN_T13  | N       | DATA 1- |
+| GPIO_1_14   | PIN_R13  | P       | DATA 1+ |
+| GPIO_1_15   | PIN_T12  | N       | DATA 0- |
+| GPIO_1_16   | PIN_R12  | P       | DATA 0+ |
+| GPIO_1_17   | PIN_T11  | N       | CLOCK - |
+| GPIO_1_19   | PIN_R11  | P       | CLOCK + |
+
+
+</div>
 
 </div>
 </div>
